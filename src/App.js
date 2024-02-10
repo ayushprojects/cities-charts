@@ -1,10 +1,17 @@
+import CityInfo from "./components/CityInfo";
 import TreeMap from "./components/TreeMap";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 function App() {
   return (
     <>
-      <h1>hello tree map</h1>
-
-      <TreeMap />
+      {/* <TreeMap /> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<TreeMap />} />
+          <Route path="/CityInfo" element={<CityInfo />} />
+        </Routes>
+      </Router>
     </>
   );
 }
