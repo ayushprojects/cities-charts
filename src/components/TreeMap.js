@@ -12,6 +12,7 @@ import {
 import { color } from "chart.js/helpers";
 import { TreemapController, TreemapElement } from "chartjs-chart-treemap";
 import { Chart } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -23,23 +24,6 @@ ChartJS.register(
   TreemapController,
   TreemapElement
 );
-
-// const data = [
-//   { city: "Mumbai", temprature: 5, population: 0.1 },
-//   { city: "Pune", temprature: 4, population: 0.7 },
-//   { city: "Bhopal", temprature: 30, population: 0.5 },
-//   { city: "Indore", temprature: 11, population: 0.8 },
-//   { city: "Hydrabad", temprature: 36, population: 0.8 },
-//   { city: "Chennai", temprature: 3, population: 0.6 },
-//   { city: "Jabalpur", temprature: 35, population: 0 },
-//   { city: "Thane", temprature: 40, population: 0.1 },
-//   { city: "Jaipur", temprature: 34, population: 0.3 },
-//   { city: "Jodhpur", temprature: 14, population: 0.5 },
-//   { city: "Surat", temprature: 39, population: 0.8 },
-//   { city: "Kanpur", temprature: 28, population: 0.8 },
-//   { city: "Lakhnow", temprature: 18, population: 0.6 },
-//   { city: "Delhi", temprature: 19, population: 0.8 },
-// ];
 
 const data = [
   { city: "Mumbai", temprature: 5, population: 40000 },
@@ -86,9 +70,7 @@ const options = {
     },
   },
   onClick: (event, elements) => {
-    if (elements.length > 0) {
-      window.location.href = `/CityInfo`;
-    }
+    window.handleClick();
   },
 };
 
@@ -116,6 +98,8 @@ const config = {
 };
 
 export default function TreeMap() {
+  const navigate = useNavigate();
+  window.handleClick = () => navigate("/CityInfo");
   return (
     <>
       <Bar />
@@ -125,7 +109,8 @@ export default function TreeMap() {
           height: "600px",
           display: "flex",
           margin: "auto",
-        }}>
+        }}
+      >
         <Chart
           type="treemap"
           data={config.data}
