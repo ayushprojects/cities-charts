@@ -41,65 +41,66 @@ const data = [
   { city: "Lakhnow", temprature: 18, population: 345435 },
   { city: "Delhi", temprature: 19, population: 34556 },
 ];
-const options = {
-  plugins: {
-    title: {
-      display: true,
-      text: "Assessment 2",
-    },
-
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      displayColors: false,
-      callbacks: {
-        title(items) {
-          return items[0].raw._data.city;
-        },
-        label(item) {
-          const {
-            _data: { temprature, population },
-          } = item.raw;
-          return [
-            `Temprature: ${temprature} \u00B0C `,
-            `Population: ${population}`,
-          ];
-        },
-      },
-    },
-  },
-  onClick: (event, elements) => {
-    window.handleClick();
-  },
-};
-
-const config = {
-  type: "treemap",
-  data: {
-    datasets: [
-      {
-        tree: data,
-        key: "population",
-        labels: {
-          display: true,
-          formatter: (context) => context.raw._data.city,
-        },
-        backgroundColor(context) {
-          if (context.type !== "data") return "transparent";
-          const { temprature } = context.raw._data;
-          return temprature >= 15
-            ? color("red").rgbString()
-            : color("blue").alpha(temprature).rgbString();
-        },
-      },
-    ],
-  },
-};
 
 export default function TreeMap() {
   const navigate = useNavigate();
-  window.handleClick = () => navigate("/CityInfo");
+  const handleClick = () => navigate("/CityInfo");
+
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: "Assessment 2",
+      },
+
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        displayColors: false,
+        callbacks: {
+          title(items) {
+            return items[0].raw._data.city;
+          },
+          label(item) {
+            const {
+              _data: { temprature, population },
+            } = item.raw;
+            return [
+              `Temprature: ${temprature} \u00B0C `,
+              `Population: ${population}`,
+            ];
+          },
+        },
+      },
+    },
+    onClick: (event, elements) => {
+      handleClick();
+    },
+  };
+
+  const config = {
+    type: "treemap",
+    data: {
+      datasets: [
+        {
+          tree: data,
+          key: "population",
+          labels: {
+            display: true,
+            formatter: (context) => context.raw._data.city,
+          },
+          backgroundColor(context) {
+            if (context.type !== "data") return "transparent";
+            const { temprature } = context.raw._data;
+            return temprature >= 15
+              ? color("red").rgbString()
+              : color("blue").alpha(temprature).rgbString();
+          },
+        },
+      ],
+    },
+  };
   return (
     <>
       <Bar />
